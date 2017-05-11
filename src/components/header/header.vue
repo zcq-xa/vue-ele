@@ -17,8 +17,12 @@
           <span class="text">{{seller.supports[0].description}}</span>
         </div>
       </div>
+      <div class="support-count"></div>
     </div>
-    <div class="bulletin-wrapper"></div>
+    <div v-if="seller.supports" class="support-count">
+      <span class="count">{{seller.supports.length}}个</span>
+      <i class="icon-keyboard_arrow_right"></i>
+    </div>
   </div>
 </template>
 <script>
@@ -34,12 +38,14 @@
   }
 </script>
 <style lang="stylus" type="text/stylus">
+
   @import "../../common/stylus/mixin.styl"
 
   .header
     padding: 24px 12px 18px 24px
     color: #fff
     background: rgba(7, 17, 27, 0.5)
+    position: relative
     .avatar
       display: inline-block
       vertical-align: top
@@ -89,4 +95,19 @@
         .text
           line-height: 12px
           font-size: 10px
+    .support-count
+      width: 40px
+      position: absolute
+      padding-left: 5px
+      right: 12px
+      bottom: 18px
+      height: 24px
+      line-height: 24px
+      border-radius: 14px
+      background: rgba(0, 0, 0, 0.2)
+      text-align: center
+      .count
+        font-size: 10px
+      .icon-keyboard_arrow_right
+        font-size: 10px
 </style>
