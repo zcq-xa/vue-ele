@@ -64,5 +64,7 @@
         margin-bottom: 10px
         line-height: 12px
         font-size: 12px
-
+      .support
+        .text
+          font-size: 12px
 </style>
