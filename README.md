@@ -1,5 +1,5 @@
 # ele-demo
-###此demo是基于vue1.0搭建的，根据慕课网老师学习的制作的小案例，学习中...
+### 此demo是基于vue1.0搭建的，根据慕课网老师学习的制作的小案例，学习中...
 > A Vue.js project
 
 ## Build Setup
