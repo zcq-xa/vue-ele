@@ -32,10 +32,12 @@
       <div class="detail-wrapper clearfix">
         <div class="detail-main">
           <h1 class="name">{{seller.name}}</h1>
-          <star :size="48" :score="seller.score"></star>
+          <div class="star-wrapper">
+            <star :size="48" :score="seller.score"></star>
+          </div>
         </div>
       </div>
-      <div class="detail-close"><i class="icon-close"></i></div>
+      <div class="detail-close" @click="close"><i class="icon-close"></i></div>
     </div>
   </div>
 </template>
@@ -56,6 +58,9 @@
     methods: {
       showDetail() {
         this.detailShow = true
+      },
+      close() {
+        this.detailShow = false
       }
     },
     created() {
@@ -204,6 +209,10 @@
             text-align: center
             font-size: 16px
             font-weight: 700
+          .star-wrapper
+            margin: 18px 0 0 0
+            padding: 2px 0
+            text-align: center
       .detail-close
         position: relative
         width: 32px
