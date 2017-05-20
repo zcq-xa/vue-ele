@@ -1,21 +1,21 @@
 <template>
   <div class="goods">
-    <div class="menu-wrapper">
+    <div class="menu-wrapper" v-el:menu-wrapper>
       <ul>
-        <li v-for="item in goods" class="menu-item">
-          <span class="text border-1px">
+        <li v-for="item in goods" class="menu-item" :class="{'current':currentIndex===$index}">
+          <span class="text">
             <span v-show="item.type>0" class="icon" :class="classMap[item.type]"></span>{{item.name}}
           </span>
         </li>
       </ul>
     </div>
-    <div class="foods-wrapper">
+    <div class="foods-wrapper" v-el:foods-wrapper>
       <ul>
         <li v-for="item in goods" class="food-list">
           <h1 class="title">{{item.name}}</h1>
           <ul>
             <li v-for="food in item.foods" class="food-item border-1px">
-              <div class="icon"><img :src="food.icon"></div>
+              <div class="icon"><img width="57px" height="57px" :src="food.icon"></div>
               <div class="content">
                 <h2 class="name">{{food.name}}</h2>
                 <p class="desc">{{food.description}}</p>
@@ -36,6 +36,7 @@
   </div>
 </template>
 <script>
+  import BScroll from 'better-scroll'
   const ERR_OK = 0
 
   export default {
@@ -58,14 +59,23 @@
         response = response.body
         if (response.errno === ERR_OK) {
           this.goods = response.data
-          console.log(this.goods)
+          this.$nextTick(() => {
+            this._initScroll()
+          })
         }
       })
+    },
+    methods: {
+      _initScroll() {
+        this.menuScroll = new BScroll(this.$els.menuWrapper, {})
+        this.menuScroll = new BScroll(this.$els.foodsWrapper, {})
+      }
     }
   }
 </script>
-<style lang="stylus" type="text/stylus">
+<style lang="stylus" rel="stylus">
   @import "../../common/stylus/mixin.styl"
+
   .goods
     display: flex
     position: absolute
@@ -81,13 +91,22 @@
         display: table
         height: 54px
         width: 56px
-        margin: 0 auto
+        padding: 0 12px
         line-height: 14px
+        &.current
+          position: relative
+          z-index: 10
+          margin-top: -1px
+          background: #fff
+          font-weight: 700
+        &:first-child
+          .text
+            border-top: 0
         .icon
           display: inline-block
+          vertical-align: top
           width: 12px
           height: 12px
-          vertical-align: top
           margin-right: 2px
           background-size: 12px 12px
           background-repeat: no-repeat
@@ -105,11 +124,11 @@
           display: table-cell
           width: 56px
           vertical-align: middle
-          border-1px(rgba(7, 17, 27, .1))
+          border-top: 1px solid rgba(7, 17, 27, 0.1)
           font-size: 12px
+
     .foods-wrapper
       flex: 1
-      background: #fff;
       .title
         padding-left: 14px
         height: 26px
@@ -118,40 +137,33 @@
         font-size: 12px
         color: rgb(147, 153, 159)
         background: #f3f5f7
-
       .food-item
         display: flex
         margin: 18px
         padding-bottom: 18px
-        border-1px(#f3f5f7)
+        border-1px(rgb(243, 245, 247))
         &:last-child
           border-none()
           margin-bottom: 0
         .icon
           flex: 0 0 57px
-          width: 57px
-          height: 57px
           margin-right: 10px
-          img
-            width: 100%
-            height: 100%
         .content
           flex: 1
           .name
-            margin: 2px 0 8px 0
-            height: 14px
-            line-height: 14px
             font-size: 14px
-            color: rgb(7, 17, 27)
+            color: #07111b
+            line-height: 19px
           .desc, .extra
             line-height: 10px
             font-size: 10px
             color: rgb(147, 153, 159)
           .desc
-            margin-bottom: 8px
+            line-height: 1.3
+            margin: 4px 0 8px 0
           .extra
-            &.count
-              margin-right: 12px
+            .count
+              margin-right: 4px
           .price
             font-weight: 700
             line-height: 24px
@@ -163,6 +175,8 @@
               text-decoration: line-through
               font-size: 10px
               color: rgb(147, 153, 159)
-
-
+          .cartcontrol-wrapper
+            position: absolute
+            right: 0
+            bottom: 12px
 </style>
