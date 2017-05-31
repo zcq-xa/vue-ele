@@ -28,6 +28,9 @@
                   <span class="now">￥{{food.price}}</span>
                   <span v-show="food.oldPrice" class="old">￥{{food.oldPrice}}</span>
                 </div>
+                <div class="cartcontrol-wrapper">
+                  <cartcontrol :food="food"></cartcontrol>
+                </div>
               </div>
             </li>
           </ul>
@@ -40,6 +43,7 @@
 <script>
   import BScroll from 'better-scroll'
   import shopcart from 'components/shopcart/shopcart'
+  import cartcontrol from 'components/cartcontrol/cartcontrol'
   const ERR_OK = 0
 
   export default {
@@ -116,12 +120,13 @@
       }
     },
     components: {
-      shopcart
+      shopcart,
+      cartcontrol
     }
   }
 </script>
-<style lang="stylus" rel="stylus">
-  @import "../../common/stylus/mixin.styl"
+<style lang="stylus" type="text/stylus">
+  @import "../../common/stylus/mixin.styl";
 
   .goods
     display: flex
