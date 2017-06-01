@@ -102,6 +102,7 @@
           click: true
         })
         this.foodsScroll = new BScroll(this.$els.foodsWrapper, {
+          click: true,
           probeType: 3
         })
         this.foodsScroll.on('scroll', (pos) => {
@@ -193,10 +194,11 @@
         color: rgb(147, 153, 159)
         background: #f3f5f7
       .food-item
+        position: relative
         display: flex
         margin: 18px
         padding-bottom: 18px
-        border-1px(rgb(243, 245, 247))
+        border-bottom: 1px solid #eee
         &:last-child
           border-none()
           margin-bottom: 0
