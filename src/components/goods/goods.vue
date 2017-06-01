@@ -37,7 +37,8 @@
         </li>
       </ul>
     </div>
-    <shopcart :delivery-price="seller.deliveryPrice" :min-price="seller.minPrice"></shopcart>
+    <shopcart v-ref:shopcart :select-foods="selectFoods" :delivery-price="seller.deliveryPrice"
+              :min-price="seller.minPrice"></shopcart>
   </div>
 </template>
 <script>
@@ -71,6 +72,17 @@
           }
         }
         return 0
+      },
+      selectFoods() {
+        let foods = []
+        this.goods.forEach((good) => {
+          good.foods.forEach((food) => {
+            if (food.count) {
+              foods.push(food)
+            }
+          })
+        })
+        return foods
       }
     },
     // 生命周期钩子
@@ -95,7 +107,9 @@
         let foodList = this.$els.foodsWrapper.getElementsByClassName('food-list-hook')
         let el = foodList[index]
         this.foodsScroll.scrollToElement(el, 300)
-        console.log(index)
+      },
+      _drop(target) {
+        this.$refs.shopcart.drop(target)
       },
       _initScroll() {
         this.menuScroll = new BScroll(this.$els.menuWrapper, {
@@ -123,6 +137,11 @@
     components: {
       shopcart,
       cartcontrol
+    },
+    events: {
+      'cart.add'(target) {
+        this._drop(target)
+      }
     }
   }
 </script>
