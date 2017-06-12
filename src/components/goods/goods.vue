@@ -109,7 +109,10 @@
         this.foodsScroll.scrollToElement(el, 300)
       },
       _drop(target) {
-        this.$refs.shopcart.drop(target)
+        // 异步执行 优化下落动画
+        this.$nextTick(() => {
+          this.$refs.shopcart.drop(target)
+        })
       },
       _initScroll() {
         this.menuScroll = new BScroll(this.$els.menuWrapper, {
