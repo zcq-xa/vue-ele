@@ -56,7 +56,10 @@
   import BScroll from 'better-scroll'
   import Vue from 'vue'
   import cartcontrol from 'components/cartcontrol/cartcontrol'
+  import ratingselect from 'components/ratingselect/ratingselect'
   import split from 'components/split/split'
+
+  const ALL = 2
   export default {
     props: {
       food: {
@@ -65,12 +68,21 @@
     },
     data() {
       return {
-        showFlag: false
+        showFlag: false,
+        selectType: ALL,
+        onlyContent: false,
+        desc: {
+          all: '全部',
+          positive: '推荐',
+          negative: '吐槽'
+        }
       }
     },
     methods: {
       show() {
         this.showFlag = true
+        this.selectType = ALL
+        this.onlyContent = false
         this.$nextTick(() => {
           if (!this.scroll) {
             this.scroll = new BScroll(this.$els.food, {
@@ -90,6 +102,16 @@
         }
         this.$dispatch('cart.add', event.target)
         Vue.set(this.food, 'count', 1)
+      },
+      needShow(type, text) {
+        if (this.onlyContent && !text) {
+          return false
+        }
+        if (this.selectType === ALL) {
+          return true
+        } else {
+          return type === this.selectType
+        }
       }
     },
     events: {
@@ -108,7 +130,8 @@
     },
     components: {
       cartcontrol,
-      split
+      split,
+      ratingselect
     }
   }
 </script>
